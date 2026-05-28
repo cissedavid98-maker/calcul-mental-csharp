@@ -1,0 +1,166 @@
+<UserControl x:Class="MentalMathGame.Views.MainMenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Barre du haut -->
+        <Border Grid.Row="0" Background="{StaticResource SurfaceBrush}" Padding="24,14">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Logo -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="🧮" FontSize="24" Margin="0,0,8,0"/>
+                    <TextBlock Text="Calcul Mental" FontSize="18" FontWeight="Bold"/>
+                </StackPanel>
+
+                <!-- Stats rapides -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource CardBrush}" CornerRadius="8" Padding="14,6" Margin="6,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🎮 " FontSize="13"/>
+                            <TextBlock Text="{Binding TotalGames}" FontSize="13" FontWeight="Bold" Margin="0,0,4,0"/>
+                            <TextBlock Text="parties" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="{StaticResource CardBrush}" CornerRadius="8" Padding="14,6" Margin="6,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="⭐ " FontSize="13"/>
+                            <TextBlock Text="{Binding TotalPoints}" FontSize="13" FontWeight="Bold" Margin="0,0,4,0"/>
+                            <TextBlock Text="pts" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="{StaticResource CardBrush}" CornerRadius="8" Padding="14,6" Margin="6,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🎖️ " FontSize="13"/>
+                            <TextBlock Text="{Binding BadgesUnlocked}" FontSize="13" FontWeight="Bold"/>
+                            <TextBlock Text="/" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock Text="{Binding TotalBadges}" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock Text=" badges" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Bouton déconnexion -->
+                <Button Grid.Column="2"
+                        Content="Changer de profil"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Command="{Binding LogoutCommand}"
+                        Padding="12,8"
+                        FontSize="13"/>
+            </Grid>
+        </Border>
+
+        <!-- Message de bienvenue -->
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,40,0,20">
+            <TextBlock Text="{Binding WelcomeMessage}"
+                       Style="{StaticResource TitleStyle}"
+                       HorizontalAlignment="Center"/>
+            <TextBlock Text="Quel mode veux-tu jouer aujourd'hui ?"
+                       Style="{StaticResource SubtitleStyle}"
+                       HorizontalAlignment="Center"
+                       Margin="0,8,0,0"/>
+        </StackPanel>
+
+        <!-- Cartes des modes de jeu -->
+        <WrapPanel Grid.Row="2"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center">
+
+            <!-- Chrono -->
+            <Button Style="{StaticResource GameModeCardStyle}"
+                    Command="{Binding SelectModeCommand}"
+                    CommandParameter="Chrono">
+                <StackPanel>
+                    <TextBlock Text="⏱️" FontSize="36" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Chrono" FontSize="18" FontWeight="Bold"
+                               HorizontalAlignment="Center" Margin="0,8,0,4"/>
+                    <TextBlock Text="Max de questions en 60s"
+                               FontSize="11"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Série -->
+            <Button Style="{StaticResource GameModeCardStyle}"
+                    Command="{Binding SelectModeCommand}"
+                    CommandParameter="Serie">
+                <StackPanel>
+                    <TextBlock Text="📋" FontSize="36" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Série" FontSize="18" FontWeight="Bold"
+                               HorizontalAlignment="Center" Margin="0,8,0,4"/>
+                    <TextBlock Text="10, 20 ou 30 questions"
+                               FontSize="11"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Survie -->
+            <Button Style="{StaticResource GameModeCardStyle}"
+                    Command="{Binding SelectModeCommand}"
+                    CommandParameter="Survie">
+                <StackPanel>
+                    <TextBlock Text="❤️" FontSize="36" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Survie" FontSize="18" FontWeight="Bold"
+                               HorizontalAlignment="Center" Margin="0,8,0,4"/>
+                    <TextBlock Text="3 vies — tiens le plus longtemps"
+                               FontSize="11"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Défi du jour -->
+            <Button Style="{StaticResource GameModeCardStyle}"
+                    Command="{Binding SelectModeCommand}"
+                    CommandParameter="DéfiDuJour">
+                <StackPanel>
+                    <TextBlock Text="🌟" FontSize="36" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Défi du jour" FontSize="18" FontWeight="Bold"
+                               HorizontalAlignment="Center" Margin="0,8,0,4"/>
+                    <TextBlock Text="Un défi unique chaque jour"
+                               FontSize="11"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
+        </WrapPanel>
+
+        <!-- Pied de page avec accès classement / stats -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,30">
+            <Button Content="🏆  Classement"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    Padding="20,10" Margin="8,0"
+                    IsEnabled="False"/>
+            <Button Content="📊  Statistiques"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    Padding="20,10" Margin="8,0"
+                    IsEnabled="False"/>
+            <Button Content="🎖️  Badges"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    Padding="20,10" Margin="8,0"
+                    IsEnabled="False"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

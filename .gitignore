@@ -1,0 +1,29 @@
+# Build
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# Packages NuGet
+packages/
+*.nupkg
+
+# Données locales générées à l'exécution
+MentalMathGame/Data/
+
+# Logs
+*.log
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Rider / Resharper
+.idea/
+*.sln.iml
+_ReSharper*/
+
+# VS Code
+.vscode/
