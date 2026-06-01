@@ -3,11 +3,11 @@
 ```mermaid
 flowchart TB
     %% ─── ACTEURS ───
-    Joueur(["👤 Joueur"])
-    Systeme(["⚙️ Système"])
+    Joueur([" Joueur"])
+    Systeme([" Système"])
 
     %% ─── PACKAGE : Gestion du Profil ───
-    subgraph Profil["📁 Gestion du Profil"]
+    subgraph Profil[" Gestion du Profil"]
         UC1("Créer un profil")
         UC2("Sélectionner un profil")
         UC3("Consulter ses badges")
@@ -15,7 +15,7 @@ flowchart TB
     end
 
     %% ─── PACKAGE : Jouer une Partie ───
-    subgraph Jeu["🎮 Jouer une Partie"]
+    subgraph Jeu[" Jouer une Partie"]
         UC5("Choisir le mode de jeu")
         UC6("Choisir la difficulté")
         UC7("Jouer en mode Chrono")
@@ -27,13 +27,13 @@ flowchart TB
     end
 
     %% ─── PACKAGE : Classement ───
-    subgraph Classement["🏆 Classement"]
+    subgraph Classement[" Classement"]
         UC13("Consulter le classement")
         UC14("Filtrer par mode / difficulté")
     end
 
     %% ─── PACKAGE : Système (automatique) ───
-    subgraph Auto["🔧 Traitements Automatiques"]
+    subgraph Auto[" Traitements Automatiques"]
         UC15("Générer les questions")
         UC16("Calculer le score et le streak")
         UC17("Attribuer les badges")
