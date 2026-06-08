@@ -12,7 +12,108 @@ Cette semaine correspond à la finalisation de la **Semaine 1 (S1)** du plan de 
 
 ---
 
-## 2. Travaux réalisés
+## 2. Langages et technologies utilisés
+
+### 2.1 Langage de programmation — C#
+
+C# (C Sharp) est un langage de programmation orienté objet créé par Microsoft. C'est le langage principal du projet.
+
+**Pourquoi C# ?**
+- Syntaxe claire et fortement typée : chaque variable a un type précis, ce qui évite les erreurs.
+- Orienté objet : on modélise l'application avec des classes (`PlayerProfile`, `GameSession`, etc.).
+- Intégration native avec .NET et WPF.
+- Fonctionnalités modernes utilisées dans ce projet :
+  - `Guid` — identifiant unique universel (pour les profils et les parties).
+  - `INotifyPropertyChanged` — interface qui notifie l'interface graphique quand une donnée change.
+  - `Dictionary<K, V>` — tableau associatif pour stocker les scores et statistiques par mode.
+  - `List<T>` — liste générique pour les questions, badges et historique.
+  - Propriétés automatiques (`{ get; set; }`) pour les modèles de données.
+
+### 2.2 Framework — .NET 10
+
+.NET est la plateforme d'exécution développée par Microsoft sur laquelle tourne l'application.
+
+**Ce qu'il apporte au projet :**
+- Compilation et exécution du code C#.
+- Bibliothèques standard : `System.Text.Json` pour la sauvegarde, `System.Collections.Generic` pour les listes et dictionnaires.
+- Gestion automatique de la mémoire (garbage collector).
+- Version utilisée : **.NET 10** (dernière version stable au moment du développement).
+
+### 2.3 Interface graphique — WPF (Windows Presentation Foundation)
+
+WPF est le framework Microsoft pour créer des interfaces graphiques Windows. Les vues sont décrites en **XAML** (langage de balisage similaire au HTML).
+
+**Ce qu'il apporte au projet :**
+- Séparation claire entre l'interface (`.xaml`) et la logique (`.cs`) grâce au pattern MVVM.
+- Système de **data binding** : l'interface se met à jour automatiquement quand les données changent, sans code supplémentaire.
+- Styles et ressources réutilisables : le thème sombre est défini une seule fois dans `Styles.xaml` et appliqué à toute l'application.
+- Contrôles riches : boutons, listes, zones de texte, animations.
+
+**XAML** (eXtensible Application Markup Language) est le langage utilisé pour décrire les vues :
+```xml
+<!-- Exemple : un bouton lié à une commande du ViewModel -->
+<Button Content="Jouer" Command="{Binding StartGameCommand}" />
+```
+
+### 2.4 Architecture logicielle — MVVM
+
+MVVM (Model – View – ViewModel) est le patron de conception architectural choisi pour ce projet.
+
+| Couche | Rôle | Exemple dans le projet |
+|---|---|---|
+| **Model** | Données pures, sans logique d'affichage | `PlayerProfile`, `GameSession`, `Question` |
+| **View** | Interface graphique uniquement (XAML) | `ProfileSelectionView.xaml`, `MainMenuView.xaml` |
+| **ViewModel** | Logique de présentation, liaison entre Model et View | `ProfileSelectionViewModel`, `MainMenuViewModel` |
+
+**Avantage principal :** la Vue ne connaît pas le Model directement. Cela facilite les tests et les modifications de l'interface sans toucher à la logique métier.
+
+### 2.5 Persistance des données — JSON
+
+Les données (profils, scores, historique) sont sauvegardées localement dans des fichiers **JSON** (JavaScript Object Notation).
+
+**Pourquoi JSON ?**
+- Format texte lisible par un humain.
+- Léger et rapide à lire/écrire.
+- Natif en .NET via `System.Text.Json` (aucune dépendance externe nécessaire).
+
+Exemple de profil sérialisé :
+```json
+{
+  "id": "a1b2c3...",
+  "username": "Alice",
+  "statistics": {
+    "totalGamesPlayed": 12,
+    "totalPoints": 340
+  }
+}
+```
+
+### 2.6 Versionnement — Git et GitHub
+
+- **Git** : système de contrôle de version local. Chaque modification importante est enregistrée dans un commit avec un message descriptif.
+- **GitHub** : hébergement distant du dépôt, permettant la sauvegarde en ligne et le suivi de l'avancement du projet.
+- Branche principale utilisée : `master`.
+
+### 2.7 Documentation — Mermaid
+
+Les diagrammes UML sont écrits en **Mermaid**, un langage de description de diagrammes en texte pur rendu visuellement par GitHub.
+
+**Diagrammes réalisés :**
+- Diagramme de classes (`classDiagram`) — structure des données et leurs relations.
+- Diagramme de cas d'utilisation (`flowchart TB`) — interactions entre l'utilisateur et le système.
+
+### 2.8 Environnement de développement
+
+| Outil | Usage |
+|---|---|
+| Visual Studio / VS Code | Édition du code C# et XAML |
+| .NET SDK 10 | Compilation et exécution |
+| Git CLI | Commits et push vers GitHub |
+| GitHub | Hébergement du dépôt |
+
+---
+
+## 3. Travaux réalisés cette semaine
 
 ### 2.1 Structure du projet et architecture MVVM
 
