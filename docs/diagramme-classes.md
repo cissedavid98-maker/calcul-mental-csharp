@@ -3,7 +3,7 @@
 ```mermaid
 classDiagram
     direction TB
-
+ 
     %% ───────────── MODÈLES ─────────────
 
     class PlayerProfile {

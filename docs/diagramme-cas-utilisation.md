@@ -24,7 +24,7 @@ flowchart TB
         UC10("Relever le Défi du jour")
         UC11("Répondre à une question")
         UC12("Recevoir un feedback")
-    end
+    end 
 
     %% ─── PACKAGE : Classement ───
     subgraph Classement[" Classement"]
