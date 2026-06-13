@@ -1,0 +1,118 @@
+<UserControl x:Class="MentalMathGame.Views.GameSetupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:MentalMathGame.Converters">
+
+    <UserControl.Resources>
+        <conv:BoolToBackgroundConverter x:Key="BoolToBg"/>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+
+        <!-- Bouton retour en haut à gauche -->
+        <Button Content="← Retour"
+                Style="{StaticResource DangerButtonStyle}"
+                Command="{Binding BackCommand}"
+                HorizontalAlignment="Left" VerticalAlignment="Top"
+                Margin="24,20"/>
+
+        <!-- Contenu centré -->
+        <StackPanel MaxWidth="520"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Margin="40">
+
+            <!-- Titre du mode -->
+            <TextBlock Text="{Binding ModeTitle}"
+                       Style="{StaticResource TitleStyle}"
+                       HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding ModeDescription}"
+                       Style="{StaticResource SubtitleStyle}"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       TextWrapping="Wrap"
+                       Margin="0,8,0,40"/>
+
+            <!-- Sélection de la difficulté -->
+            <TextBlock Text="DIFFICULTÉ"
+                       FontSize="12" FontWeight="Bold"                       Foreground="{StaticResource TextSecondaryBrush}"
+                       Margin="0,0,0,12"/>
+
+            <UniformGrid Columns="3" Margin="0,0,0,32">
+                <Button Style="{StaticResource GameModeCardStyle}"
+                        Background="{Binding IsFacileSelected, Converter={StaticResource BoolToBg}}"
+                        Command="{Binding SelectDifficultyCommand}" CommandParameter="Facile"
+                        Height="110" Width="Auto" Margin="0,0,8,0">
+                    <StackPanel>
+                        <TextBlock Text="😊" FontSize="28" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Facile" FontSize="15" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="0,6,0,4"/>
+                        <TextBlock Text="1 — 20"  FontSize="12"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource GameModeCardStyle}"
+                        Background="{Binding IsMoyenSelected, Converter={StaticResource BoolToBg}}"
+                        Command="{Binding SelectDifficultyCommand}" CommandParameter="Moyen"
+                        Height="110" Width="Auto" Margin="4,0,4,0">
+                    <StackPanel>
+                        <TextBlock Text="🤔" FontSize="28" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Moyen" FontSize="15" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="0,6,0,4"/>
+                        <TextBlock Text="10 — 100" FontSize="12"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource GameModeCardStyle}"
+                        Background="{Binding IsDifficileSelected, Converter={StaticResource BoolToBg}}"
+                        Command="{Binding SelectDifficultyCommand}" CommandParameter="Difficile"
+                        Height="110" Width="Auto" Margin="8,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="🧠" FontSize="28" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Difficile" FontSize="15" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="0,6,0,4"/>
+                        <TextBlock Text="50 — 999" FontSize="12"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </UniformGrid>
+
+            <!-- Nombre de questions (Mode Série uniquement) -->
+            <StackPanel Visibility="{Binding IsSerieMode,
+                                    Converter={StaticResource BoolToVisibilityConverter}}"
+                        Margin="0,0,0,32">
+                <TextBlock Text="NOMBRE DE QUESTIONS"
+                           FontSize="12" FontWeight="Bold"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           Margin="0,0,0,12"/>
+                <UniformGrid Columns="3">
+                    <Button Content="10" Style="{StaticResource GameModeCardStyle}"
+                            Background="{Binding Is10Selected, Converter={StaticResource BoolToBg}}"
+                            Command="{Binding SelectQuestionCountCommand}" CommandParameter="10"
+                            Height="60" Width="Auto" Margin="0,0,8,0"
+                            FontSize="20" FontWeight="Bold"/>
+                    <Button Content="20" Style="{StaticResource GameModeCardStyle}"
+                            Background="{Binding Is20Selected, Converter={StaticResource BoolToBg}}"
+                            Command="{Binding SelectQuestionCountCommand}" CommandParameter="20"
+                            Height="60" Width="Auto" Margin="4,0,4,0"
+                            FontSize="20" FontWeight="Bold"/>
+                    <Button Content="30" Style="{StaticResource GameModeCardStyle}"
+                            Background="{Binding Is30Selected, Converter={StaticResource BoolToBg}}"
+                            Command="{Binding SelectQuestionCountCommand}" CommandParameter="30"
+                            Height="60" Width="Auto" Margin="8,0,0,0"
+                            FontSize="20" FontWeight="Bold"/>
+                </UniformGrid>
+            </StackPanel>
+
+            <!-- Bouton Commencer -->
+            <Button Content="Commencer  ▶"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Command="{Binding StartCommand}"
+                    HorizontalAlignment="Center"
+                    Padding="48,14" FontSize="17"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

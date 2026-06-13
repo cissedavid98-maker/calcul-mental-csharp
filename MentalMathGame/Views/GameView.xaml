@@ -1,0 +1,131 @@
+<UserControl x:Class="MentalMathGame.Views.GameView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>   <!-- Barre supérieure -->
+            <RowDefinition Height="Auto"/>   <!-- Timer / compteur -->
+            <RowDefinition Height="*"/>      <!-- Zone de jeu -->
+        </Grid.RowDefinitions>
+
+        <!-- ── Barre supérieure ───────────────────────────────────────── -->
+        <Border Grid.Row="0" Background="{StaticResource SurfaceBrush}" Padding="24,14">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="{Binding ModeLabel}"
+                           FontSize="15" FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+
+                <!-- Score + Streak -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Border Background="{StaticResource CardBrush}" CornerRadius="8"
+                            Padding="16,8" Margin="0,0,10,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Score : " FontSize="14"
+                                       Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock Text="{Binding Score}" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="{StaticResource CardBrush}" CornerRadius="8" Padding="16,8">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🔥 " FontSize="14"/>
+                            <TextBlock Text="{Binding Streak}" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ── Timer (Chrono) ─────────────────────────────────────────── -->
+        <Grid Grid.Row="1"
+              Visibility="{Binding IsChronoMode, Converter={StaticResource BoolToVisibilityConverter}}">
+            <ProgressBar Maximum="60" Value="{Binding TimeLeft}"
+                         Height="8" BorderThickness="0"
+                         Style="{StaticResource TimerBarStyle}"/>
+            <TextBlock Text="{Binding TimeLeft, StringFormat={}{0}s}"
+                       HorizontalAlignment="Right" Margin="0,10,20,0"
+                       FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
+        </Grid>
+
+        <!-- ── Compteur (Série) ───────────────────────────────────────── -->
+        <TextBlock Grid.Row="1"
+                   Visibility="{Binding IsSerieMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                   HorizontalAlignment="Center" Margin="0,10"
+                   FontSize="13" Foreground="{StaticResource TextSecondaryBrush}">
+            <Run Text="Question "/>
+            <Run Text="{Binding QuestionNumber}" FontWeight="Bold"/>
+            <Run Text=" / "/>
+            <Run Text="{Binding TotalQuestions}" FontWeight="Bold"/>
+        </TextBlock>
+
+        <!-- ── Zone de jeu centrale ──────────────────────────────────── -->
+        <StackPanel Grid.Row="2"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    MaxWidth="560"
+                    Margin="40">
+
+            <!-- Question -->
+            <TextBlock Text="{Binding CurrentQuestion.Display}"
+                       FontSize="56" FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,36"/>
+
+            <!-- Champ de réponse -->
+            <TextBox x:Name="AnswerBox"
+                     Style="{StaticResource ModernTextBoxStyle}"
+                     Text="{Binding AnswerText, UpdateSourceTrigger=PropertyChanged}"
+                     IsEnabled="{Binding InputEnabled}"
+                     FontSize="26" TextAlignment="Center"
+                     MaxWidth="240" HorizontalAlignment="Center"
+                     Margin="0,0,0,16">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Return" Command="{Binding SubmitCommand}"/>
+                </TextBox.InputBindings>
+            </TextBox>
+
+            <Button Content="Valider"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Command="{Binding SubmitCommand}"
+                    HorizontalAlignment="Center"
+                    Padding="40,13" FontSize="16"
+                    Margin="0,0,0,28"/>
+
+            <!-- Feedback -->
+            <Border HorizontalAlignment="Center"
+                    CornerRadius="10" Padding="22,12"
+                    Visibility="{Binding ShowFeedback,
+                                Converter={StaticResource BoolToVisibilityConverter}}">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="#2D1515"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding FeedbackIsCorrect}" Value="True">
+                                <Setter Property="Background" Value="#152D15"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <TextBlock Text="{Binding FeedbackMessage}" FontSize="15" FontWeight="SemiBold">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="{StaticResource ErrorBrush}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding FeedbackIsCorrect}" Value="True">
+                                    <Setter Property="Foreground" Value="{StaticResource SuccessBrush}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>
