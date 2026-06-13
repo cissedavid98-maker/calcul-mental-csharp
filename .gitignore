@@ -27,3 +27,8 @@ _ReSharper*/
 
 # VS Code
 .vscode/
+
+# Rapports (documents Word et Markdown locaux)
+*.docx
+*.doc
+docs/rapport-*.md
