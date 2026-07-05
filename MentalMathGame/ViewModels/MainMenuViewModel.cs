@@ -6,25 +6,32 @@ namespace MentalMathGame.ViewModels;
 public class MainMenuViewModel : BaseViewModel
 {
     private readonly Action<GameMode> _onModeSelected;
-    private readonly Action _onLogout;
+    private readonly Action           _onLogout;
+    private readonly Action           _onLeaderboard;
+    private readonly Action           _onStats;
 
     public PlayerProfile CurrentPlayer { get; }
 
-    public string WelcomeMessage => $"Bonjour, {CurrentPlayer.Username} !";
-    public int TotalGames => CurrentPlayer.Statistics.TotalGamesPlayed;
-    public int TotalPoints => CurrentPlayer.Statistics.TotalPoints;
-    public double GlobalAccuracy => CurrentPlayer.Statistics.GlobalAccuracy;
-    public int BadgesUnlocked => CurrentPlayer.Badges.Count(b => b.IsUnlocked);
-    public int TotalBadges => 7;
+    public string WelcomeMessage  => $"Bonjour, {CurrentPlayer.Username} !";
+    public int    TotalGames      => CurrentPlayer.Statistics.TotalGamesPlayed;
+    public int    TotalPoints     => CurrentPlayer.Statistics.TotalPoints;
+    public double GlobalAccuracy  => CurrentPlayer.Statistics.GlobalAccuracy;
+    public int    BadgesUnlocked  => CurrentPlayer.Badges.Count(b => b.IsUnlocked);
+    public int    TotalBadges     => 7;
 
-    public RelayCommand<string> SelectModeCommand { get; }
-    public RelayCommand LogoutCommand { get; }
+    public RelayCommand<string> SelectModeCommand   { get; }
+    public RelayCommand         LogoutCommand       { get; }
+    public RelayCommand         LeaderboardCommand  { get; }
+    public RelayCommand         StatsCommand        { get; }
 
-    public MainMenuViewModel(PlayerProfile player, Action<GameMode> onModeSelected, Action onLogout)
+    public MainMenuViewModel(PlayerProfile player, Action<GameMode> onModeSelected,
+                             Action onLogout, Action onLeaderboard, Action onStats)
     {
-        CurrentPlayer = player;
+        CurrentPlayer   = player;
         _onModeSelected = onModeSelected;
-        _onLogout = onLogout;
+        _onLogout       = onLogout;
+        _onLeaderboard  = onLeaderboard;
+        _onStats        = onStats;
 
         SelectModeCommand = new RelayCommand<string>(mode =>
         {
@@ -32,6 +39,8 @@ public class MainMenuViewModel : BaseViewModel
                 _onModeSelected(gameMode);
         });
 
-        LogoutCommand = new RelayCommand(_onLogout);
+        LogoutCommand      = new RelayCommand(_onLogout);
+        LeaderboardCommand = new RelayCommand(_onLeaderboard);
+        StatsCommand       = new RelayCommand(_onStats);
     }
 }

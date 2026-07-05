@@ -11,18 +11,20 @@ public class GameViewModel : BaseViewModel
     private readonly GameMode   _mode;
     private readonly int        _totalQuestions;
     private readonly Action<GameSession> _onGameEnd;
+    private readonly Action _onAbandon;
 
     private Question? _currentQuestion;
-    private string _answerText    = string.Empty;
+    private string _answerText      = string.Empty;
     private int    _score;
     private int    _streak;
-    private int    _timeLeft      = 60;
+    private int    _timeLeft        = 60;
     private string _feedbackMessage = string.Empty;
     private bool   _showFeedback;
     private bool   _feedbackIsCorrect;
-    private bool   _inputEnabled  = true;
+    private bool   _inputEnabled    = true;
     private int    _questionNumber;
     private bool   _gameOver;
+    private int    _lives           = 3;
 
     private DispatcherTimer? _chronoTimer;
     private DispatcherTimer? _feedbackTimer;
@@ -95,25 +97,49 @@ public class GameViewModel : BaseViewModel
     public int QuestionNumber
     {
         get => _questionNumber;
-        set => Set(ref _questionNumber, value);
+        set
+        {
+            Set(ref _questionNumber, value);
+            OnPropertyChanged(nameof(QuestionCounterText));
+        }
     }
 
-    public int TotalQuestions => _totalQuestions;
-    public bool IsChronoMode  => _mode == GameMode.Chrono;
-    public bool IsSerieMode   => _mode == GameMode.Serie;
+    public int Lives
+    {
+        get => _lives;
+        private set
+        {
+            Set(ref _lives, value);
+            OnPropertyChanged(nameof(LivesDisplay));
+        }
+    }
 
-    public RelayCommand SubmitCommand { get; }
+    public string LivesDisplay =>
+        string.Concat(Enumerable.Repeat("❤️ ", _lives)) +
+        string.Concat(Enumerable.Repeat("🖤 ", 3 - _lives));
+
+    public int    TotalQuestions      => _totalQuestions;
+    public string QuestionCounterText => $"Question {_questionNumber} / {_totalQuestions}";
+    public bool   IsChronoMode        => _mode == GameMode.Chrono;
+    public bool   IsSerieMode         => _mode == GameMode.Serie;
+    public bool   IsSurvieMode        => _mode == GameMode.Survie;
+    public bool   ShowQuestionCounter => _mode == GameMode.Serie || _mode == GameMode.DéfiDuJour;
+
+    public RelayCommand SubmitCommand  { get; }
+    public RelayCommand AbandonCommand { get; }
 
     // ── Constructeur ──────────────────────────────────────────────────────
 
-    public GameViewModel(GameEngine engine, GameMode mode, int totalQuestions, Action<GameSession> onGameEnd)
+    public GameViewModel(GameEngine engine, GameMode mode, int totalQuestions, Action<GameSession> onGameEnd, Action onAbandon)
     {
         _engine         = engine;
         _mode           = mode;
         _totalQuestions = totalQuestions;
         _onGameEnd      = onGameEnd;
+        _onAbandon      = onAbandon;
 
-        SubmitCommand = new RelayCommand(Submit, () => InputEnabled && int.TryParse(AnswerText, out _));
+        SubmitCommand  = new RelayCommand(Submit, () => InputEnabled && int.TryParse(AnswerText, out _));
+        AbandonCommand = new RelayCommand(Abandon);
 
         if (mode == GameMode.Chrono) StartChronoTimer();
 
@@ -137,7 +163,8 @@ public class GameViewModel : BaseViewModel
     {
         if (_gameOver) return;
 
-        if (_mode == GameMode.Serie && _questionNumber >= _totalQuestions)
+        bool hasLimit = _mode == GameMode.Serie || _mode == GameMode.DéfiDuJour;
+        if (hasLimit && _questionNumber >= _totalQuestions)
         {
             FinishGame();
             return;
@@ -161,18 +188,44 @@ public class GameViewModel : BaseViewModel
         Streak = result.CurrentStreak;
         FeedbackIsCorrect = result.IsCorrect;
 
-        FeedbackMessage = result.IsCorrect
-            ? (result.CurrentStreak > 3
-                ? $"✅  Bonne réponse !  +{result.PointsEarned} pts  🔥  Série de {result.CurrentStreak} !"
-                : $"✅  Bonne réponse !  +{result.PointsEarned} pts")
-            : $"❌  La réponse était  {result.CorrectAnswer}";
+        bool gameOverAfterFeedback = false;
+        if (!result.IsCorrect && _mode == GameMode.Survie)
+        {
+            Lives--;
+            if (_lives <= 0) gameOverAfterFeedback = true;
+        }
 
+        FeedbackMessage = BuildFeedbackMessage(result, gameOverAfterFeedback);
         ShowFeedback = true;
 
-        // Passage automatique à la question suivante après 1,1 seconde
         _feedbackTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1100) };
-        _feedbackTimer.Tick += (_, _) => { _feedbackTimer.Stop(); LoadNextQuestion(); };
+        _feedbackTimer.Tick += (_, _) =>
+        {
+            _feedbackTimer.Stop();
+            if (gameOverAfterFeedback) FinishGame(); else LoadNextQuestion();
+        };
         _feedbackTimer.Start();
+    }
+
+    private string BuildFeedbackMessage(AnswerResult result, bool gameOver)
+    {
+        if (result.IsCorrect)
+            return result.CurrentStreak > 3
+                ? $"✅  Bonne réponse !  +{result.PointsEarned} pts  🔥  Série de {result.CurrentStreak} !"
+                : $"✅  Bonne réponse !  +{result.PointsEarned} pts";
+
+        return gameOver
+            ? $"❌  La réponse était  {result.CorrectAnswer}  —  Plus de vies !"
+            : $"❌  La réponse était  {result.CorrectAnswer}";
+    }
+
+    private void Abandon()
+    {
+        if (_gameOver) return;
+        _gameOver = true;
+        _chronoTimer?.Stop();
+        _feedbackTimer?.Stop();
+        _onAbandon();
     }
 
     private void FinishGame()

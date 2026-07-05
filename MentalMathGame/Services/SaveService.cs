@@ -79,6 +79,17 @@ public class SaveService
             .ToList();
     }
 
+    public int GetPlayerRank(Guid playerId, GameMode mode, Difficulty difficulty)
+    {
+        var all = LoadAllScores()
+            .Where(s => s.Mode == mode && s.Difficulty == difficulty)
+            .OrderByDescending(s => s.Points)
+            .ToList();
+        for (int i = 0; i < all.Count; i++)
+            if (all[i].PlayerId == playerId) return i + 1;
+        return 0;
+    }
+
     public List<Score> GetAllScoresForPlayer(Guid playerId)
     {
         return LoadAllScores()

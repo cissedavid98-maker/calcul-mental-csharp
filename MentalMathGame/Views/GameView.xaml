@@ -14,17 +14,34 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0"
+                <!-- Bouton retour -->
+                <Button Grid.Column="0"
+                        Content="← Retour"
+                        Style="{StaticResource DangerButtonStyle}"
+                        Command="{Binding AbandonCommand}"
+                        Padding="8,4" Margin="0,0,16,0"
+                        VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Column="1"
                            Text="{Binding ModeLabel}"
                            FontSize="15" FontWeight="Bold"
                            VerticalAlignment="Center"/>
 
+                <!-- Vies (Survie uniquement) -->
+                <TextBlock Grid.Column="2"
+                           Text="{Binding LivesDisplay}"
+                           FontSize="20"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Visibility="{Binding IsSurvieMode,
+                                       Converter={StaticResource BoolToVisibilityConverter}}"/>
+
                 <!-- Score + Streak -->
-                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <StackPanel Grid.Column="3" Orientation="Horizontal">
                     <Border Background="{StaticResource CardBrush}" CornerRadius="8"
                             Padding="16,8" Margin="0,0,10,0">
                         <StackPanel Orientation="Horizontal">
@@ -54,16 +71,13 @@
                        FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
         </Grid>
 
-        <!-- ── Compteur (Série) ───────────────────────────────────────── -->
+        <!-- ── Compteur (Série + Défi du jour) ──────────────────────── -->
         <TextBlock Grid.Row="1"
-                   Visibility="{Binding IsSerieMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                   Text="{Binding QuestionCounterText}"
+                   Visibility="{Binding ShowQuestionCounter, Converter={StaticResource BoolToVisibilityConverter}}"
                    HorizontalAlignment="Center" Margin="0,10"
-                   FontSize="13" Foreground="{StaticResource TextSecondaryBrush}">
-            <Run Text="Question "/>
-            <Run Text="{Binding QuestionNumber}" FontWeight="Bold"/>
-            <Run Text=" / "/>
-            <Run Text="{Binding TotalQuestions}" FontWeight="Bold"/>
-        </TextBlock>
+                   FontSize="13" FontWeight="SemiBold"
+                   Foreground="{StaticResource TextSecondaryBrush}"/>
 
         <!-- ── Zone de jeu centrale ──────────────────────────────────── -->
         <StackPanel Grid.Row="2"

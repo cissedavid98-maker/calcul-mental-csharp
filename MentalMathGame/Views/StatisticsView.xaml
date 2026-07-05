@@ -1,0 +1,243 @@
+<UserControl x:Class="MentalMathGame.Views.StatisticsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Barre supérieure -->
+        <Border Grid.Row="0" Background="{StaticResource SurfaceBrush}" Padding="24,14">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0"
+                        Content="← Retour"
+                        Style="{StaticResource DangerButtonStyle}"
+                        Command="{Binding BackCommand}"
+                        Padding="8,4" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1"
+                           Text="📊  Statistiques"
+                           FontSize="18" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!-- Contenu scrollable -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="24,24" MaxWidth="700" HorizontalAlignment="Center">
+
+                <!-- ── Résumé général ─────────────────────────────────────── -->
+                <TextBlock Text="RÉSUMÉ" FontSize="11" FontWeight="Bold"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           Margin="0,0,0,10"/>
+                <UniformGrid Columns="3" Margin="0,0,0,28">
+                    <Border Background="{StaticResource CardBrush}" CornerRadius="8"
+                            Padding="20,18" Margin="0,0,8,0">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="{Binding TotalGamesText}"
+                                       FontSize="34" FontWeight="Bold"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Parties jouées" FontSize="12"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="{StaticResource CardBrush}" CornerRadius="8"
+                            Padding="20,18" Margin="4,0,4,0">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="{Binding TotalPointsText}"
+                                       FontSize="34" FontWeight="Bold"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Points totaux" FontSize="12"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="{StaticResource CardBrush}" CornerRadius="8"
+                            Padding="20,18" Margin="8,0,0,0">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="{Binding AccuracyText}"
+                                       FontSize="34" FontWeight="Bold"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Précision globale" FontSize="12"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </UniformGrid>
+
+                <!-- ── Meilleurs scores par mode ──────────────────────────── -->
+                <TextBlock Text="MEILLEURS SCORES PAR MODE" FontSize="11" FontWeight="Bold"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           Margin="0,0,0,10"/>
+                <UniformGrid Columns="4" Margin="0,0,0,28">
+                    <Border Background="{StaticResource CardBrush}" CornerRadius="8"
+                            Padding="14,16" Margin="0,0,6,0">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="⏱️" FontSize="24" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding BestChrono}"
+                                       FontSize="22" FontWeight="Bold"
+                                       HorizontalAlignment="Center" Margin="0,6,0,2"/>
+                            <TextBlock Text="Chrono" FontSize="11"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="{StaticResource CardBrush}" CornerRadius="8"
+                            Padding="14,16" Margin="2,0,2,0">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="📋" FontSize="24" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding BestSerie}"
+                                       FontSize="22" FontWeight="Bold"
+                                       HorizontalAlignment="Center" Margin="0,6,0,2"/>
+                            <TextBlock Text="Série" FontSize="11"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="{StaticResource CardBrush}" CornerRadius="8"
+                            Padding="14,16" Margin="2,0,2,0">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="❤️" FontSize="24" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding BestSurvie}"
+                                       FontSize="22" FontWeight="Bold"
+                                       HorizontalAlignment="Center" Margin="0,6,0,2"/>
+                            <TextBlock Text="Survie" FontSize="11"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="{StaticResource CardBrush}" CornerRadius="8"
+                            Padding="14,16" Margin="6,0,0,0">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="🌟" FontSize="24" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding BestDéfi}"
+                                       FontSize="22" FontWeight="Bold"
+                                       HorizontalAlignment="Center" Margin="0,6,0,2"/>
+                            <TextBlock Text="Défi du jour" FontSize="11"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </UniformGrid>
+
+                <!-- ── Précision par opération ────────────────────────────── -->
+                <TextBlock Text="PRÉCISION PAR OPÉRATION" FontSize="11" FontWeight="Bold"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           Margin="0,0,0,10"/>
+                <Border Background="{StaticResource CardBrush}" CornerRadius="8"
+                        Padding="20,18" Margin="0,0,0,28">
+                    <StackPanel>
+
+                        <!-- Addition -->
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="52"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Addition (+)"
+                                       VerticalAlignment="Center" FontSize="14"/>
+                            <ProgressBar Grid.Column="1" Maximum="100"
+                                         Value="{Binding AdditionValue}"
+                                         Height="10" Margin="12,0" VerticalAlignment="Center"
+                                         Style="{StaticResource TimerBarStyle}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding AdditionText}"
+                                       HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       FontSize="14" FontWeight="Bold"/>
+                        </Grid>
+
+                        <!-- Soustraction -->
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="52"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Soustraction (−)"
+                                       VerticalAlignment="Center" FontSize="14"/>
+                            <ProgressBar Grid.Column="1" Maximum="100"
+                                         Value="{Binding SoustractionValue}"
+                                         Height="10" Margin="12,0" VerticalAlignment="Center"
+                                         Style="{StaticResource TimerBarStyle}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding SoustractionText}"
+                                       HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       FontSize="14" FontWeight="Bold"/>
+                        </Grid>
+
+                        <!-- Multiplication -->
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="52"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Multiplication (×)"
+                                       VerticalAlignment="Center" FontSize="14"/>
+                            <ProgressBar Grid.Column="1" Maximum="100"
+                                         Value="{Binding MultiplicationValue}"
+                                         Height="10" Margin="12,0" VerticalAlignment="Center"
+                                         Style="{StaticResource TimerBarStyle}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding MultiplicationText}"
+                                       HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       FontSize="14" FontWeight="Bold"/>
+                        </Grid>
+
+                        <!-- Division -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="52"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Division (÷)"
+                                       VerticalAlignment="Center" FontSize="14"/>
+                            <ProgressBar Grid.Column="1" Maximum="100"
+                                         Value="{Binding DivisionValue}"
+                                         Height="10" Margin="12,0" VerticalAlignment="Center"
+                                         Style="{StaticResource TimerBarStyle}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding DivisionText}"
+                                       HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       FontSize="14" FontWeight="Bold"/>
+                        </Grid>
+
+                    </StackPanel>
+                </Border>
+
+                <!-- ── Points forts / faibles ─────────────────────────────── -->
+                <TextBlock Text="ANALYSE" FontSize="11" FontWeight="Bold"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           Margin="0,0,0,10"/>
+                <UniformGrid Columns="2" Margin="0,0,0,24">
+                    <Border Background="#152D15" CornerRadius="8"
+                            Padding="20,16" Margin="0,0,8,0">
+                        <StackPanel>
+                            <TextBlock Text="💪  Point fort" FontSize="12"
+                                       Foreground="{StaticResource SuccessBrush}"
+                                       Margin="0,0,0,6"/>
+                            <TextBlock Text="{Binding StrongestOperation}"
+                                       FontSize="16" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="#2D1515" CornerRadius="8"
+                            Padding="20,16" Margin="8,0,0,0">
+                        <StackPanel>
+                            <TextBlock Text="📚  À travailler" FontSize="12"
+                                       Foreground="{StaticResource ErrorBrush}"
+                                       Margin="0,0,0,6"/>
+                            <TextBlock Text="{Binding WeakestOperation}"
+                                       FontSize="16" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                </UniformGrid>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -9,8 +9,9 @@ namespace MentalMathGame;
 
 public partial class MainWindow : Window
 {
-    private readonly SaveService       _saveService = new();
-    private readonly NavigationService _navService  = new();
+    private readonly SaveService       _saveService   = new();
+    private readonly NavigationService _navService    = new();
+    private readonly StatisticsService _statsService  = new();
     private PlayerProfile? _currentPlayer;
 
     public MainWindow()
@@ -38,7 +39,8 @@ public partial class MainWindow : Window
     private void ShowMainMenu()
     {
         if (_currentPlayer == null) return;
-        var vm   = new MainMenuViewModel(_currentPlayer, ShowGameSetup, ShowProfileSelection);
+        var vm   = new MainMenuViewModel(_currentPlayer, ShowGameSetup,
+                                         ShowProfileSelection, ShowLeaderboard, ShowStatistics);
         var view = new MainMenuView { DataContext = vm };
         _navService.NavigateTo(view);
     }
@@ -47,8 +49,34 @@ public partial class MainWindow : Window
 
     private void ShowGameSetup(GameMode mode)
     {
+        if (mode == GameMode.DéfiDuJour)
+        {
+            string today = DateTime.Today.ToString("yyyy-MM-dd");
+            if (_currentPlayer!.LastDailyChallengeDate == today)
+            {
+                MessageBox.Show(
+                    "Tu as déjà relevé le défi du jour !\nReviens demain pour un nouveau défi. 🌟",
+                    "Défi du jour", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            StartDailyChallenge();
+            return;
+        }
+
         var vm   = new GameSetupViewModel(mode, StartGame, ShowMainMenu);
         var view = new GameSetupView { DataContext = vm };
+        _navService.NavigateTo(view);
+    }
+
+    private void StartDailyChallenge()
+    {
+        int seed = int.Parse(DateTime.Today.ToString("yyyyMMdd"));
+        var generator = new QuestionGenerator(seed);
+        var engine    = new GameEngine(generator);
+        engine.StartGame(GameMode.DéfiDuJour, Difficulty.Moyen, _currentPlayer!.Id);
+
+        var vm   = new GameViewModel(engine, GameMode.DéfiDuJour, 10, OnGameEnd, ShowMainMenu);
+        var view = new GameView { DataContext = vm };
         _navService.NavigateTo(view);
     }
 
@@ -58,14 +86,13 @@ public partial class MainWindow : Window
         var engine    = new GameEngine(generator);
         engine.StartGame(mode, difficulty, _currentPlayer!.Id);
 
-        var vm   = new GameViewModel(engine, mode, questionCount, OnGameEnd);
+        var vm   = new GameViewModel(engine, mode, questionCount, OnGameEnd, ShowMainMenu);
         var view = new GameView { DataContext = vm };
         _navService.NavigateTo(view);
     }
 
     private void OnGameEnd(GameSession session)
     {
-        // Sauvegarde du score dans le classement
         var score = new Score
         {
             PlayerId   = _currentPlayer!.Id,
@@ -78,17 +105,37 @@ public partial class MainWindow : Window
         };
         _saveService.SaveScore(score);
 
-        // Mise à jour du profil joueur
         _currentPlayer.GameHistory.Add(session);
         UpdatePlayerStats(session);
+
+        if (session.Mode == GameMode.DéfiDuJour)
+            _currentPlayer.LastDailyChallengeDate = DateTime.Today.ToString("yyyy-MM-dd");
+
         _saveService.SaveProfile(_currentPlayer);
 
-        // Affichage des résultats
         var vm = new GameResultViewModel(
             session,
-            onPlayAgain:   () => ShowGameSetup(session.Mode),
-            onBackToMenu:  ShowMainMenu);
+            onPlayAgain:  () => ShowGameSetup(session.Mode),
+            onBackToMenu: ShowMainMenu);
         var view = new GameResultView { DataContext = vm };
+        _navService.NavigateTo(view);
+    }
+
+    // ── Classement et Statistiques ────────────────────────────────────────
+
+    private void ShowLeaderboard()
+    {
+        if (_currentPlayer == null) return;
+        var vm   = new LeaderboardViewModel(_saveService, _currentPlayer.Id, ShowMainMenu);
+        var view = new LeaderboardView { DataContext = vm };
+        _navService.NavigateTo(view);
+    }
+
+    private void ShowStatistics()
+    {
+        if (_currentPlayer == null) return;
+        var vm   = new StatisticsViewModel(_currentPlayer, _statsService, ShowMainMenu);
+        var view = new StatisticsView { DataContext = vm };
         _navService.NavigateTo(view);
     }
 
@@ -100,19 +147,18 @@ public partial class MainWindow : Window
         stats.TotalGamesPlayed++;
         stats.TotalPoints += session.FinalScore;
 
-        // Meilleur score par mode
         var modeKey = session.Mode.ToString();
         if (!stats.BestScorePerMode.TryGetValue(modeKey, out int best) || session.FinalScore > best)
             stats.BestScorePerMode[modeKey] = session.FinalScore;
 
-        // Précision globale recalculée sur tout l'historique
         int totalAnswered = _currentPlayer.GameHistory.Sum(s => s.TotalAnswered);
         int totalCorrect  = _currentPlayer.GameHistory.Sum(s => s.CorrectAnswers);
         stats.GlobalAccuracy = totalAnswered > 0
             ? (double)totalCorrect / totalAnswered * 100
             : 0;
 
-        // Parties par jour
+        _statsService.UpdateOperationAccuracy(_currentPlayer);
+
         string today = DateTime.Today.ToString("yyyy-MM-dd");
         stats.GamesPerDay.TryGetValue(today, out int count);
         stats.GamesPerDay[today] = count + 1;
