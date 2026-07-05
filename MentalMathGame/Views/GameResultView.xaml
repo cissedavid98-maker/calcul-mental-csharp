@@ -8,12 +8,6 @@
                     HorizontalAlignment="Center"
                     Margin="40">
 
-            <!-- Emoji résultat -->
-            <TextBlock Text="{Binding ResultEmoji}"
-                       FontSize="64"
-                       HorizontalAlignment="Center"
-                       Margin="0,0,0,8"/>
-
             <TextBlock Text="{Binding ResultMessage}"
                        Style="{StaticResource TitleStyle}"
                        HorizontalAlignment="Center"
@@ -64,10 +58,8 @@
                         <TextBlock Text="Meilleure série"
                                    FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"
                                    HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                        <TextBlock FontSize="28" FontWeight="Bold" HorizontalAlignment="Center">
-                            <Run Text="🔥 "/>
-                            <Run Text="{Binding Session.MaxStreak}"/>
-                        </TextBlock>
+                        <TextBlock Text="{Binding Session.MaxStreak}"
+                                   FontSize="28" FontWeight="Bold" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Border>
             </UniformGrid>
@@ -79,32 +71,26 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="✅  " FontSize="14"/>
-                        <TextBlock FontSize="14">
-                            <Run Text="{Binding Session.CorrectAnswers}" FontWeight="Bold"/>
-                            <Run Text=" / "/>
-                            <Run Text="{Binding Session.TotalAnswered}" FontWeight="Bold"/>
-                            <Run Text="  bonnes réponses" Foreground="{StaticResource TextSecondaryBrush}"/>
-                        </TextBlock>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="⏱️  " FontSize="14"/>
-                        <TextBlock FontSize="14">
-                            <Run Text="{Binding DurationText}" FontWeight="Bold"/>
-                            <Run Text="  de jeu" Foreground="{StaticResource TextSecondaryBrush}"/>
-                        </TextBlock>
-                    </StackPanel>
+                    <TextBlock Grid.Column="0" FontSize="14" HorizontalAlignment="Center">
+                        <Run Text="{Binding Session.CorrectAnswers}" FontWeight="Bold"/>
+                        <Run Text=" / "/>
+                        <Run Text="{Binding Session.TotalAnswered}" FontWeight="Bold"/>
+                        <Run Text="  bonnes réponses" Foreground="{StaticResource TextSecondaryBrush}"/>
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" FontSize="14" HorizontalAlignment="Center">
+                        <Run Text="{Binding DurationText}" FontWeight="Bold"/>
+                        <Run Text="  de jeu" Foreground="{StaticResource TextSecondaryBrush}"/>
+                    </TextBlock>
                 </Grid>
             </Border>
 
             <!-- Boutons d'action -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="🔄  Rejouer"
+                <Button Content="Rejouer"
                         Style="{StaticResource SecondaryButtonStyle}"
                         Command="{Binding PlayAgainCommand}"
                         Padding="28,12" FontSize="15" Margin="0,0,12,0"/>
-                <Button Content="🏠  Menu principal"
+                <Button Content="Menu principal"
                         Style="{StaticResource PrimaryButtonStyle}"
                         Command="{Binding BackToMenuCommand}"
                         Padding="28,12" FontSize="15"/>

@@ -33,10 +33,10 @@ public class GameViewModel : BaseViewModel
 
     public string ModeLabel => _mode switch
     {
-        GameMode.Chrono     => "⏱️  CHRONO",
-        GameMode.Serie      => "📋  SÉRIE",
-        GameMode.Survie     => "❤️  SURVIE",
-        GameMode.DéfiDuJour => "🌟  DÉFI DU JOUR",
+        GameMode.Chrono     => "CHRONO",
+        GameMode.Serie      => "SERIE",
+        GameMode.Survie     => "SURVIE",
+        GameMode.DéfiDuJour => "DEFI DU JOUR",
         _                   => string.Empty
     };
 
@@ -114,9 +114,7 @@ public class GameViewModel : BaseViewModel
         }
     }
 
-    public string LivesDisplay =>
-        string.Concat(Enumerable.Repeat("❤️ ", _lives)) +
-        string.Concat(Enumerable.Repeat("🖤 ", 3 - _lives));
+    public string LivesDisplay => $"Vies : {_lives} / 3";
 
     public int    TotalQuestions      => _totalQuestions;
     public string QuestionCounterText => $"Question {_questionNumber} / {_totalQuestions}";
@@ -211,12 +209,12 @@ public class GameViewModel : BaseViewModel
     {
         if (result.IsCorrect)
             return result.CurrentStreak > 3
-                ? $"✅  Bonne réponse !  +{result.PointsEarned} pts  🔥  Série de {result.CurrentStreak} !"
-                : $"✅  Bonne réponse !  +{result.PointsEarned} pts";
+                ? $"Bonne réponse !  +{result.PointsEarned} pts  —  Série de {result.CurrentStreak} !"
+                : $"Bonne réponse !  +{result.PointsEarned} pts";
 
         return gameOver
-            ? $"❌  La réponse était  {result.CorrectAnswer}  —  Plus de vies !"
-            : $"❌  La réponse était  {result.CorrectAnswer}";
+            ? $"Mauvaise réponse.  La bonne réponse était  {result.CorrectAnswer}  —  Plus de vies !"
+            : $"Mauvaise réponse.  La bonne réponse était  {result.CorrectAnswer}";
     }
 
     private void Abandon()

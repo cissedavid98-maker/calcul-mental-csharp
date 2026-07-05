@@ -52,7 +52,8 @@
                     </Border>
                     <Border Background="{StaticResource CardBrush}" CornerRadius="8" Padding="16,8">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="🔥 " FontSize="14"/>
+                            <TextBlock Text="Serie : " FontSize="14"
+                                       Foreground="{StaticResource TextSecondaryBrush}"/>
                             <TextBlock Text="{Binding Streak}" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                     </Border>

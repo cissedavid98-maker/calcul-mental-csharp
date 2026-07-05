@@ -22,7 +22,7 @@
                         Command="{Binding BackCommand}"
                         Padding="8,4" VerticalAlignment="Center"/>
                 <TextBlock Grid.Column="1"
-                           Text="📊  Statistiques"
+                           Text="Statistiques"
                            FontSize="18" FontWeight="Bold"
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
@@ -80,10 +80,9 @@
                     <Border Background="{StaticResource CardBrush}" CornerRadius="8"
                             Padding="14,16" Margin="0,0,6,0">
                         <StackPanel HorizontalAlignment="Center">
-                            <TextBlock Text="⏱️" FontSize="24" HorizontalAlignment="Center"/>
                             <TextBlock Text="{Binding BestChrono}"
                                        FontSize="22" FontWeight="Bold"
-                                       HorizontalAlignment="Center" Margin="0,6,0,2"/>
+                                       HorizontalAlignment="Center" Margin="0,0,0,2"/>
                             <TextBlock Text="Chrono" FontSize="11"
                                        Foreground="{StaticResource TextSecondaryBrush}"
                                        HorizontalAlignment="Center"/>
@@ -92,10 +91,9 @@
                     <Border Background="{StaticResource CardBrush}" CornerRadius="8"
                             Padding="14,16" Margin="2,0,2,0">
                         <StackPanel HorizontalAlignment="Center">
-                            <TextBlock Text="📋" FontSize="24" HorizontalAlignment="Center"/>
                             <TextBlock Text="{Binding BestSerie}"
                                        FontSize="22" FontWeight="Bold"
-                                       HorizontalAlignment="Center" Margin="0,6,0,2"/>
+                                       HorizontalAlignment="Center" Margin="0,0,0,2"/>
                             <TextBlock Text="Série" FontSize="11"
                                        Foreground="{StaticResource TextSecondaryBrush}"
                                        HorizontalAlignment="Center"/>
@@ -104,10 +102,9 @@
                     <Border Background="{StaticResource CardBrush}" CornerRadius="8"
                             Padding="14,16" Margin="2,0,2,0">
                         <StackPanel HorizontalAlignment="Center">
-                            <TextBlock Text="❤️" FontSize="24" HorizontalAlignment="Center"/>
                             <TextBlock Text="{Binding BestSurvie}"
                                        FontSize="22" FontWeight="Bold"
-                                       HorizontalAlignment="Center" Margin="0,6,0,2"/>
+                                       HorizontalAlignment="Center" Margin="0,0,0,2"/>
                             <TextBlock Text="Survie" FontSize="11"
                                        Foreground="{StaticResource TextSecondaryBrush}"
                                        HorizontalAlignment="Center"/>
@@ -116,10 +113,9 @@
                     <Border Background="{StaticResource CardBrush}" CornerRadius="8"
                             Padding="14,16" Margin="6,0,0,0">
                         <StackPanel HorizontalAlignment="Center">
-                            <TextBlock Text="🌟" FontSize="24" HorizontalAlignment="Center"/>
                             <TextBlock Text="{Binding BestDéfi}"
                                        FontSize="22" FontWeight="Bold"
-                                       HorizontalAlignment="Center" Margin="0,6,0,2"/>
+                                       HorizontalAlignment="Center" Margin="0,0,0,2"/>
                             <TextBlock Text="Défi du jour" FontSize="11"
                                        Foreground="{StaticResource TextSecondaryBrush}"
                                        HorizontalAlignment="Center"/>
@@ -218,7 +214,7 @@
                     <Border Background="#152D15" CornerRadius="8"
                             Padding="20,16" Margin="0,0,8,0">
                         <StackPanel>
-                            <TextBlock Text="💪  Point fort" FontSize="12"
+                            <TextBlock Text="Point fort" FontSize="12"
                                        Foreground="{StaticResource SuccessBrush}"
                                        Margin="0,0,0,6"/>
                             <TextBlock Text="{Binding StrongestOperation}"
@@ -228,7 +224,7 @@
                     <Border Background="#2D1515" CornerRadius="8"
                             Padding="20,16" Margin="8,0,0,0">
                         <StackPanel>
-                            <TextBlock Text="📚  À travailler" FontSize="12"
+                            <TextBlock Text="À travailler" FontSize="12"
                                        Foreground="{StaticResource ErrorBrush}"
                                        Margin="0,0,0,6"/>
                             <TextBlock Text="{Binding WeakestOperation}"

@@ -10,13 +10,7 @@ public class LeaderboardEntry
     public DateTime Date            { get; init; }
     public bool     IsCurrentPlayer { get; init; }
 
-    public string RankDisplay => Rank switch
-    {
-        1 => "🥇",
-        2 => "🥈",
-        3 => "🥉",
-        _ => $"#{Rank}"
-    };
+    public string RankDisplay => $"#{Rank}";
 
     public string DateDisplay => Date.ToString("dd/MM/yyyy");
 }

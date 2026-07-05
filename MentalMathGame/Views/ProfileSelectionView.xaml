@@ -11,7 +11,6 @@
 
         <!-- En-tête -->
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,60,0,40">
-            <TextBlock Text="🧮" FontSize="56" HorizontalAlignment="Center"/>
             <TextBlock Text="Calcul Mental"
                        Style="{StaticResource TitleStyle}"
                        HorizontalAlignment="Center"

@@ -42,12 +42,11 @@
                 <Button Style="{StaticResource GameModeCardStyle}"
                         Background="{Binding IsFacileSelected, Converter={StaticResource BoolToBg}}"
                         Command="{Binding SelectDifficultyCommand}" CommandParameter="Facile"
-                        Height="110" Width="Auto" Margin="0,0,8,0">
+                        Height="90" Width="Auto" Margin="0,0,8,0">
                     <StackPanel>
-                        <TextBlock Text="😊" FontSize="28" HorizontalAlignment="Center"/>
                         <TextBlock Text="Facile" FontSize="15" FontWeight="Bold"
-                                   HorizontalAlignment="Center" Margin="0,6,0,4"/>
-                        <TextBlock Text="1 — 20"  FontSize="12"
+                                   HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                        <TextBlock Text="1 — 20" FontSize="12"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    HorizontalAlignment="Center"/>
                     </StackPanel>
@@ -55,11 +54,10 @@
                 <Button Style="{StaticResource GameModeCardStyle}"
                         Background="{Binding IsMoyenSelected, Converter={StaticResource BoolToBg}}"
                         Command="{Binding SelectDifficultyCommand}" CommandParameter="Moyen"
-                        Height="110" Width="Auto" Margin="4,0,4,0">
+                        Height="90" Width="Auto" Margin="4,0,4,0">
                     <StackPanel>
-                        <TextBlock Text="🤔" FontSize="28" HorizontalAlignment="Center"/>
                         <TextBlock Text="Moyen" FontSize="15" FontWeight="Bold"
-                                   HorizontalAlignment="Center" Margin="0,6,0,4"/>
+                                   HorizontalAlignment="Center" Margin="0,0,0,4"/>
                         <TextBlock Text="10 — 100" FontSize="12"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    HorizontalAlignment="Center"/>
@@ -68,11 +66,10 @@
                 <Button Style="{StaticResource GameModeCardStyle}"
                         Background="{Binding IsDifficileSelected, Converter={StaticResource BoolToBg}}"
                         Command="{Binding SelectDifficultyCommand}" CommandParameter="Difficile"
-                        Height="110" Width="Auto" Margin="8,0,0,0">
+                        Height="90" Width="Auto" Margin="8,0,0,0">
                     <StackPanel>
-                        <TextBlock Text="🧠" FontSize="28" HorizontalAlignment="Center"/>
                         <TextBlock Text="Difficile" FontSize="15" FontWeight="Bold"
-                                   HorizontalAlignment="Center" Margin="0,6,0,4"/>
+                                   HorizontalAlignment="Center" Margin="0,0,0,4"/>
                         <TextBlock Text="50 — 999" FontSize="12"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    HorizontalAlignment="Center"/>
