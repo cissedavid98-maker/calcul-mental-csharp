@@ -166,7 +166,7 @@
                                                    FontSize="18" FontWeight="Bold">
                                             <TextBlock.Style>
                                                 <Style TargetType="TextBlock">
-                                                    <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                                                    <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding IsCurrentPlayer}" Value="True">
                                                             <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
