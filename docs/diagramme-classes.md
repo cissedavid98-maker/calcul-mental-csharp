@@ -1,6 +1,6 @@
 # Diagramme de Classes — Jeu de Calcul Mental
 
-```mermaid
+```
 classDiagram
     direction TB
  
