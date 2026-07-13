@@ -141,7 +141,7 @@
                             <TextBlock Grid.Column="0" Text="Addition (+)"
                                        VerticalAlignment="Center" FontSize="14"/>
                             <ProgressBar Grid.Column="1" Maximum="100"
-                                         Value="{Binding AdditionValue}"
+                                         Value="{Binding AdditionValue, Mode=OneWay}"
                                          Height="10" Margin="12,0" VerticalAlignment="Center"
                                          Style="{StaticResource TimerBarStyle}"/>
                             <TextBlock Grid.Column="2" Text="{Binding AdditionText}"
@@ -159,7 +159,7 @@
                             <TextBlock Grid.Column="0" Text="Soustraction (−)"
                                        VerticalAlignment="Center" FontSize="14"/>
                             <ProgressBar Grid.Column="1" Maximum="100"
-                                         Value="{Binding SoustractionValue}"
+                                         Value="{Binding SoustractionValue, Mode=OneWay}"
                                          Height="10" Margin="12,0" VerticalAlignment="Center"
                                          Style="{StaticResource TimerBarStyle}"/>
                             <TextBlock Grid.Column="2" Text="{Binding SoustractionText}"
@@ -177,7 +177,7 @@
                             <TextBlock Grid.Column="0" Text="Multiplication (×)"
                                        VerticalAlignment="Center" FontSize="14"/>
                             <ProgressBar Grid.Column="1" Maximum="100"
-                                         Value="{Binding MultiplicationValue}"
+                                         Value="{Binding MultiplicationValue, Mode=OneWay}"
                                          Height="10" Margin="12,0" VerticalAlignment="Center"
                                          Style="{StaticResource TimerBarStyle}"/>
                             <TextBlock Grid.Column="2" Text="{Binding MultiplicationText}"
@@ -195,7 +195,7 @@
                             <TextBlock Grid.Column="0" Text="Division (÷)"
                                        VerticalAlignment="Center" FontSize="14"/>
                             <ProgressBar Grid.Column="1" Maximum="100"
-                                         Value="{Binding DivisionValue}"
+                                         Value="{Binding DivisionValue, Mode=OneWay}"
                                          Height="10" Margin="12,0" VerticalAlignment="Center"
                                          Style="{StaticResource TimerBarStyle}"/>
                             <TextBlock Grid.Column="2" Text="{Binding DivisionText}"

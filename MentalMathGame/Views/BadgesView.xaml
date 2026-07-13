@@ -38,8 +38,8 @@
                            FontSize="14" FontWeight="SemiBold"
                            HorizontalAlignment="Center"
                            Foreground="{StaticResource AccentBrush}"/>
-                <ProgressBar Maximum="{Binding TotalCount}"
-                             Value="{Binding UnlockedCount}"
+                <ProgressBar Maximum="{Binding TotalCount, Mode=OneWay}"
+                             Value="{Binding UnlockedCount, Mode=OneWay}"
                              Height="6" Width="300"
                              Margin="0,8,0,0"
                              Style="{StaticResource TimerBarStyle}"/>
