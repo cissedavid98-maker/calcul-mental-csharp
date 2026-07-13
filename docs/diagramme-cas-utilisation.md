@@ -1,6 +1,6 @@
 # Diagramme de Cas d'Utilisation — Jeu de Calcul Mental
 
-```
+```mermaid
 flowchart TB
     %% ─── ACTEURS ───
     Joueur([" Joueur"])
