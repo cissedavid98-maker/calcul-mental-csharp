@@ -12,6 +12,7 @@ public partial class MainWindow : Window
     private readonly SaveService       _saveService   = new();
     private readonly NavigationService _navService    = new();
     private readonly StatisticsService _statsService  = new();
+    private readonly BadgeService      _badgeService  = new();
     private PlayerProfile? _currentPlayer;
 
     public MainWindow()
@@ -33,6 +34,7 @@ public partial class MainWindow : Window
     private void OnProfileSelected(PlayerProfile profile)
     {
         _currentPlayer = profile;
+        BadgeService.EnsureInitialized(_currentPlayer);
         ShowMainMenu();
     }
 
@@ -40,7 +42,7 @@ public partial class MainWindow : Window
     {
         if (_currentPlayer == null) return;
         var vm   = new MainMenuViewModel(_currentPlayer, ShowGameSetup,
-                                         ShowProfileSelection, ShowLeaderboard, ShowStatistics);
+                                         ShowProfileSelection, ShowLeaderboard, ShowStatistics, ShowBadges);
         var view = new MainMenuView { DataContext = vm };
         _navService.NavigateTo(view);
     }
@@ -55,7 +57,7 @@ public partial class MainWindow : Window
             if (_currentPlayer!.LastDailyChallengeDate == today)
             {
                 MessageBox.Show(
-                    "Tu as déjà relevé le défi du jour !\nReviens demain pour un nouveau défi. 🌟",
+                    "Tu as déjà relevé le défi du jour !\nReviens demain pour un nouveau défi.",
                     "Défi du jour", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
@@ -111,17 +113,18 @@ public partial class MainWindow : Window
         if (session.Mode == GameMode.DéfiDuJour)
             _currentPlayer.LastDailyChallengeDate = DateTime.Today.ToString("yyyy-MM-dd");
 
+        var newBadges = _badgeService.CheckAndAward(_currentPlayer, session);
         _saveService.SaveProfile(_currentPlayer);
 
         var vm = new GameResultViewModel(
-            session,
+            session, newBadges,
             onPlayAgain:  () => ShowGameSetup(session.Mode),
             onBackToMenu: ShowMainMenu);
         var view = new GameResultView { DataContext = vm };
         _navService.NavigateTo(view);
     }
 
-    // ── Classement et Statistiques ────────────────────────────────────────
+    // ── Classement, Statistiques, Badges ─────────────────────────────────
 
     private void ShowLeaderboard()
     {
@@ -136,6 +139,14 @@ public partial class MainWindow : Window
         if (_currentPlayer == null) return;
         var vm   = new StatisticsViewModel(_currentPlayer, _statsService, ShowMainMenu);
         var view = new StatisticsView { DataContext = vm };
+        _navService.NavigateTo(view);
+    }
+
+    private void ShowBadges()
+    {
+        if (_currentPlayer == null) return;
+        var vm   = new BadgesViewModel(_currentPlayer, ShowMainMenu);
+        var view = new BadgesView { DataContext = vm };
         _navService.NavigateTo(view);
     }
 

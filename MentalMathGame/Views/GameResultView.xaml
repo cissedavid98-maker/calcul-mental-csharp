@@ -85,7 +85,7 @@
             </Border>
 
             <!-- Boutons d'action -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,16">
                 <Button Content="Rejouer"
                         Style="{StaticResource SecondaryButtonStyle}"
                         Command="{Binding PlayAgainCommand}"
@@ -95,6 +95,36 @@
                         Command="{Binding BackToMenuCommand}"
                         Padding="28,12" FontSize="15"/>
             </StackPanel>
+
+            <!-- Nouveaux badges débloqués -->
+            <Border Background="#1A3A5C" CornerRadius="8" Padding="20,14"
+                    Visibility="{Binding HasNewBadges,
+                                Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel>
+                    <TextBlock Text="Nouveau badge debloque !"
+                               FontSize="13" FontWeight="Bold"
+                               Foreground="{StaticResource AccentBrush}"
+                               Margin="0,0,0,10"/>
+                    <ItemsControl ItemsSource="{Binding NewBadges}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{StaticResource SurfaceBrush}"
+                                        CornerRadius="6" Padding="12,8" Margin="0,0,0,6">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Name}"
+                                                   FontSize="14" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding Description}"
+                                                   FontSize="11"
+                                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                                   Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+
         </StackPanel>
     </Grid>
 </UserControl>

@@ -9,6 +9,7 @@ public class MainMenuViewModel : BaseViewModel
     private readonly Action           _onLogout;
     private readonly Action           _onLeaderboard;
     private readonly Action           _onStats;
+    private readonly Action           _onBadges;
 
     public PlayerProfile CurrentPlayer { get; }
 
@@ -23,15 +24,17 @@ public class MainMenuViewModel : BaseViewModel
     public RelayCommand         LogoutCommand       { get; }
     public RelayCommand         LeaderboardCommand  { get; }
     public RelayCommand         StatsCommand        { get; }
+    public RelayCommand         BadgesCommand       { get; }
 
     public MainMenuViewModel(PlayerProfile player, Action<GameMode> onModeSelected,
-                             Action onLogout, Action onLeaderboard, Action onStats)
+                             Action onLogout, Action onLeaderboard, Action onStats, Action onBadges)
     {
         CurrentPlayer   = player;
         _onModeSelected = onModeSelected;
         _onLogout       = onLogout;
         _onLeaderboard  = onLeaderboard;
         _onStats        = onStats;
+        _onBadges       = onBadges;
 
         SelectModeCommand = new RelayCommand<string>(mode =>
         {
@@ -42,5 +45,6 @@ public class MainMenuViewModel : BaseViewModel
         LogoutCommand      = new RelayCommand(_onLogout);
         LeaderboardCommand = new RelayCommand(_onLeaderboard);
         StatsCommand       = new RelayCommand(_onStats);
+        BadgesCommand      = new RelayCommand(_onBadges);
     }
 }

@@ -33,14 +33,6 @@ public class GameResultViewModel : BaseViewModel
         ? $"{(int)Session.Duration.TotalMinutes}m {Session.Duration.Seconds:D2}s"
         : $"{Session.Duration.Seconds}s";
 
-    public string ResultEmoji => Session.Accuracy switch
-    {
-        >= 90 => "🏆",
-        >= 70 => "⭐",
-        >= 50 => "👍",
-        _     => "💪"
-    };
-
     public string ResultMessage => Session.Accuracy switch
     {
         >= 90 => "Excellent !",
@@ -49,12 +41,17 @@ public class GameResultViewModel : BaseViewModel
         _     => "Continue de t'entraîner !"
     };
 
-    public RelayCommand PlayAgainCommand   { get; }
-    public RelayCommand BackToMenuCommand  { get; }
+    public List<Badge> NewBadges    { get; }
+    public bool        HasNewBadges => NewBadges.Count > 0;
 
-    public GameResultViewModel(GameSession session, Action onPlayAgain, Action onBackToMenu)
+    public RelayCommand PlayAgainCommand  { get; }
+    public RelayCommand BackToMenuCommand { get; }
+
+    public GameResultViewModel(GameSession session, List<Badge> newBadges,
+                               Action onPlayAgain, Action onBackToMenu)
     {
         Session       = session;
+        NewBadges     = newBadges;
         _onPlayAgain  = onPlayAgain;
         _onBackToMenu = onBackToMenu;
 
