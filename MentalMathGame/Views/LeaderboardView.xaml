@@ -45,22 +45,22 @@
                 <Button Style="{StaticResource GameModeCardStyle}"
                         Background="{Binding IsChronoSelected, Converter={StaticResource BoolToBg}}"
                         Command="{Binding SelectModeCommand}" CommandParameter="Chrono"
-                        Height="44" Margin="0,0,4,0"
+                        Width="Auto" Height="44" Margin="0,0,4,0"
                         Content="Chrono" FontSize="13"/>
                 <Button Style="{StaticResource GameModeCardStyle}"
                         Background="{Binding IsSerieSelected, Converter={StaticResource BoolToBg}}"
                         Command="{Binding SelectModeCommand}" CommandParameter="Serie"
-                        Height="44" Margin="2,0,2,0"
+                        Width="Auto" Height="44" Margin="2,0,2,0"
                         Content="Série" FontSize="13"/>
                 <Button Style="{StaticResource GameModeCardStyle}"
                         Background="{Binding IsSurvieSelected, Converter={StaticResource BoolToBg}}"
                         Command="{Binding SelectModeCommand}" CommandParameter="Survie"
-                        Height="44" Margin="2,0,2,0"
+                        Width="Auto" Height="44" Margin="2,0,2,0"
                         Content="Survie" FontSize="13"/>
                 <Button Style="{StaticResource GameModeCardStyle}"
                         Background="{Binding IsDéfiSelected, Converter={StaticResource BoolToBg}}"
                         Command="{Binding SelectModeCommand}" CommandParameter="DéfiDuJour"
-                        Height="44" Margin="4,0,0,0"
+                        Width="Auto" Height="44" Margin="4,0,0,0"
                         Content="Défi" FontSize="13"/>
             </UniformGrid>
         </StackPanel>
@@ -74,17 +74,17 @@
                 <Button Style="{StaticResource GameModeCardStyle}"
                         Background="{Binding IsFacileSelected, Converter={StaticResource BoolToBg}}"
                         Command="{Binding SelectDifficultyCommand}" CommandParameter="Facile"
-                        Height="40" Margin="0,0,4,0"
+                        Width="Auto" Height="40" Margin="0,0,4,0"
                         Content="Facile" FontSize="13"/>
                 <Button Style="{StaticResource GameModeCardStyle}"
                         Background="{Binding IsMoyenSelected, Converter={StaticResource BoolToBg}}"
                         Command="{Binding SelectDifficultyCommand}" CommandParameter="Moyen"
-                        Height="40" Margin="2,0,2,0"
+                        Width="Auto" Height="40" Margin="2,0,2,0"
                         Content="Moyen" FontSize="13"/>
                 <Button Style="{StaticResource GameModeCardStyle}"
                         Background="{Binding IsDifficileSelected, Converter={StaticResource BoolToBg}}"
                         Command="{Binding SelectDifficultyCommand}" CommandParameter="Difficile"
-                        Height="40" Margin="4,0,0,0"
+                        Width="Auto" Height="40" Margin="4,0,0,0"
                         Content="Difficile" FontSize="13"/>
             </UniformGrid>
         </StackPanel>
